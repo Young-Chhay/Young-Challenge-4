@@ -7,7 +7,7 @@ var answerBtnEl = document.getElementById('answer-buttons')
 var shufQuestions = ""
 var currentQuestions = ""
 var timeEl = document.querySelector("#timer");
-var secondsLeft = 10;
+var secondsLeft = 60;
 var questionsLi = [
     {
         question: 'What is HTML ?',
@@ -84,7 +84,7 @@ function showQuestion(question) {
         button.classList.add('btn')
         if (answer.correct) {
             button.dataset.correct = answer.correct
-        }
+        } 
         button.addEventListener('click', selectAnswer) 
         answerBtnEl.appendChild(button)
     })
@@ -111,9 +111,15 @@ function setStatusClass(element, correct) {
     clearStatusClass(element)
     if (correct) {
         element.classList.add('correct')
+        secondsLeft = secondsLeft + 11
     } else {
+        punishFalse()
         element.classList.add('wrong')
     }
+}
+
+function punishFalse() {
+    secondsLeft = secondsLeft - 5
 }
 
 function clearStatusClass(element) {
@@ -137,7 +143,9 @@ startBtn.addEventListener('click', function() {
             timeEl.textContent = 'You Lost !';
             clearInterval(timerInterval);
             sendMessage(); 
-        } 
+        } else {
+
+        }
     }, 1000);
 })
 
